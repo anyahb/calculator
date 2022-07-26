@@ -9,9 +9,8 @@ function App() {
 
 
 
-    const toggle = () => {
-        setShow(!show)
-    }
+
+
 
     const changeInput1 = function (event){
         const input = event.target.value
@@ -31,17 +30,17 @@ function App() {
 
         switch (item) {
             case "+":
-                setResult(parseInt(operand1) + parseInt(operand2))
+                setResult(parseFloat(operand1) + parseFloat(operand2))
                 break;
             case "-":
-                setResult(parseInt(operand1) - parseInt(operand2))
+                setResult(parseFloat(operand1) - parseFloat(operand2))
                 break;
             case "*":
-                setResult(parseInt(operand1) * parseInt(operand2))
+                setResult(parseFloat(operand1) * parseFloat(operand2))
                 break;
             case "/":
                 if (operand2 !== '0'){
-                    setResult(parseInt(operand1) / parseInt(operand2))
+                    setResult(parseFloat(operand1) / parseFloat(operand2))
                 } else {
                     setResult("error")
                     alert("You cannot divide by zero!")
@@ -51,7 +50,7 @@ function App() {
                 setResult(Math.pow(operand1,operand2))
                 break;
             case "fraction division":
-                setResult(Math.round(parseInt(operand1) / parseInt(operand2)))
+                setResult(Math.round(parseFloat(operand1) / parseFloat(operand2)))
                 break;
             default:
                 alert( "Error" );
@@ -114,7 +113,14 @@ function App() {
 
     const chooseOperand = function(operand){
         setCurrentOperand(operand)
+
     }
+
+
+
+    const numList = [1,2,3,4,5,6,7,8,9,0]
+
+
 
 
 
@@ -125,36 +131,49 @@ function App() {
                 <legend>
                     Choose operand {currentOperand}
                 </legend>
-                <input type={"radio"} id={"radio1"} name={"currentOperand"} value={currentOperand} checked={currentOperand === 'operand1'}/>
-                <label for={"radio1"} onClick={() => chooseOperand("operand1")}>operand1</label>
-                <input type={"radio"} id={"radio2"} name={"currentOperand"} value={currentOperand} checked={currentOperand === 'operand2'}/>
-                <label for={"radio2"} onClick={() => chooseOperand("operand2")}>operand2</label>
+
+
+                <div onClick={() => chooseOperand("operand1")}>
+                    <input type={"radio"} id={"radio1"} name={"currentOperand"} value={currentOperand} checked={currentOperand === 'operand1'}/>
+                    <label for={"radio1"}>operand1</label>
+                </div>
+                <div onClick={() => chooseOperand("operand2")}>
+                    <input type={"radio"}  id={"radio2"} name={"currentOperand"} value={currentOperand} checked={currentOperand === 'operand2'}/>
+                    <label for={"radio2"} >operand2</label>
+                </div>
+
+
             </fieldset>
+
+
             <input placeholder={"operand1"} onInput={changeInput1} value={operand1}/>
+
+
             <button onClick={() => clickHandler("+")}>+</button>
             <button onClick={() => clickHandler("-")}>-</button>
             <button onClick={() => clickHandler("*")}>*</button>
             <button onClick={() => clickHandler("/")}>/</button>
             <button onClick={() => clickHandler("x^y")}>x^y</button>
             <button onClick={() => clickHandler("fraction division")}>fraction division</button>
+
+
+
             <input placeholder={"operand2"} onInput={changeInput2} value={operand2}/>
+
+
+
             <div>
 
             </div>
 
             {show && (
             <div>
+                {numList.map((item) => {
+                   return  (
+                       <button  key={item} onClick={() => typeInput(item)}>{item}</button>
+                   )
+                })}
 
-                    <button onClick={() => typeInput("1")}>1</button>
-                    <button onClick={() => typeInput("2")}>2</button>
-                    <button onClick={() => typeInput("3")}>3</button>
-                    <button onClick={() => typeInput("4")}>4</button>
-                    <button onClick={() => typeInput("5")}>5</button>
-                    <button onClick={() => typeInput("6")}>6</button>
-                    <button onClick={() => typeInput("7")}>7</button>
-                    <button onClick={() => typeInput("8")}>8</button>
-                    <button onClick={() => typeInput("9")}>9</button>
-                    <button onClick={() => typeInput("0")}>0</button>
             </div>
             )}
 
