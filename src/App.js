@@ -1,25 +1,66 @@
 import './App.css';
 import {useState} from "react";
+import {type} from "@testing-library/user-event/dist/type";
 function App() {
     const [operand1, setOperand1]= useState('')
     const [operand2, setOperand2]= useState('')
     const [result, setResult] = useState('result: ')
     const [currentOperand,setCurrentOperand] = useState("operand2")
     const [show, setShow] = useState(true)
+    const [validated1, setValidated1] = useState("")
+    const [validated2, setValidated2] = useState("")
 
 
+
+    const del = function(){
+        if(currentOperand === "operand1"){
+            setOperand1(operand1.toString().slice(0,-1))
+        } else {
+            setOperand2(operand2.toString().slice(0,-1))
+            setValidated1("Error")
+        }
+    }
+
+    const AC = function(){
+        if(currentOperand === "operand1"){
+            setOperand1("")
+        } else {
+            setOperand2("")
+        }
+    }
+
+    const dot = function(){
+        if(currentOperand === "operand1"){
+            setOperand1(operand1 + ".")
+        } else {
+            setOperand2(operand2 + ".")
+        }
+    }
 
 
 
 
     const changeInput1 = function (event){
         const input = event.target.value
-        setOperand1(input)
+        const parsing = isNaN(input)
+        if (parsing === false){
+            setOperand1(input)
+        } else {
+            setOperand1("")
+            setValidated1("Error")
+        }
+
     }
 
     const changeInput2 = function (event){
         const input = event.target.value
-        setOperand2(input)
+        const parsing = isNaN(input)
+        if (parsing === false){
+            setOperand2(input)
+        } else {
+            setOperand2("")
+            setValidated2("Error")
+        }
     }
 
 
@@ -108,7 +149,6 @@ function App() {
         }
 
 
-
     }
 
     const chooseOperand = function(operand){
@@ -118,7 +158,9 @@ function App() {
 
 
 
+
     const numList = [1,2,3,4,5,6,7,8,9,0]
+
 
 
 
@@ -146,7 +188,8 @@ function App() {
             </fieldset>
 
 
-            <input placeholder={"operand1"} onInput={changeInput1} value={operand1}/>
+            <input onClick={() => chooseOperand("operand1")} placeholder={"operand1"} onInput={changeInput1} value={operand1}/>
+            <h1>{validated1}</h1>
 
 
             <button onClick={() => clickHandler("+")}>+</button>
@@ -157,8 +200,14 @@ function App() {
             <button onClick={() => clickHandler("fraction division")}>fraction division</button>
 
 
+            <button onClick={dot}>.</button>
+            <button onClick={del}>DEL</button>
+            <button onClick={AC}>AC</button>
 
-            <input placeholder={"operand2"} onInput={changeInput2} value={operand2}/>
+
+
+            <input onClick={() => chooseOperand("operand2")} placeholder={"operand2"} onInput={changeInput2} value={operand2}/>
+            <h1>{validated2}</h1>
 
 
 
