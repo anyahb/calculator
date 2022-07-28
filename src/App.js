@@ -1,41 +1,67 @@
 import './App.css';
 import {useState} from "react";
 import {type} from "@testing-library/user-event/dist/type";
+import {click} from "@testing-library/user-event/dist/click";
 function App() {
-    const [operand1, setOperand1]= useState('')
-    const [operand2, setOperand2]= useState('')
-    const [result, setResult] = useState('result: ')
-    const [currentOperand,setCurrentOperand] = useState("operand2")
+    const [operand1, setOperand1] = useState('')
+    const [operand2, setOperand2] = useState('')
+    const [result, setResult] = useState('')
+    const [currentOperand, setCurrentOperand] = useState("operand2")
     const [show, setShow] = useState(true)
     const [validated1, setValidated1] = useState("")
     const [validated2, setValidated2] = useState("")
 
 
-
-    const del = function(){
-        if(currentOperand === "operand1"){
-            setOperand1(operand1.toString().slice(0,-1))
+    const del = function () {
+        if (currentOperand === "operand1") {
+            setOperand1(operand1.toString().slice(0, -1))
         } else {
-            setOperand2(operand2.toString().slice(0,-1))
+            setOperand2(operand2.toString().slice(0, -1))
             setValidated1("Error")
         }
+
+        if (currentOperand === "operand2") {
+            setOperand2(operand2.toString().slice(0, -1))
+        } else {
+            setOperand2(operand2.toString().slice(0, -1))
+            setValidated2("Error")
+        }
+
     }
 
-    const AC = function(){
-        if(currentOperand === "operand1"){
+    const AC = function () {
+        if (currentOperand === "operand1") {
             setOperand1("")
         } else {
             setOperand2("")
         }
     }
 
-    const dot = function(){
-        if(currentOperand === "operand1"){
+    const dot = function () {
+        if (currentOperand === "operand1") {
             setOperand1(operand1 + ".")
         } else {
             setOperand2(operand2 + ".")
         }
     }
+
+    const plusMinus = function () {
+        if (currentOperand === "operand1") {
+            if (Math.sign(parseFloat(operand1)) === 1) {
+                setOperand1("-" + operand1)
+            } else {
+                setOperand1(operand1.substring(1))
+            }
+        }
+    if (currentOperand === "operand2") {
+        if (Math.sign(parseFloat(operand2)) === 1) {
+            setOperand2("-" + operand2)
+        } else {
+            setOperand2(operand2.substring(1))
+        }
+    }
+}
+
 
 
 
@@ -45,10 +71,13 @@ function App() {
         const parsing = isNaN(input)
         if (parsing === false){
             setOperand1(input)
+
         } else {
             setOperand1("")
-            setValidated1("Error")
+            setValidated1("Operand1 : Error. Wrong Symbols. Try again")
         }
+
+
 
     }
 
@@ -59,7 +88,7 @@ function App() {
             setOperand2(input)
         } else {
             setOperand2("")
-            setValidated2("Error")
+            setValidated2("Operand2: Error. Wrong Symbols. Try again")
         }
     }
 
@@ -168,46 +197,62 @@ function App() {
 
 
     return (
-        <div>
+        <div className="container">
+            <div id="display">
+                <h1>{result}</h1>
+            </div>
+
             <fieldset>
-                <legend>
+                <legend id="title">
                     Choose operand {currentOperand}
                 </legend>
 
+                <div className="chooseOperandFlex">
+                    <div onClick={() => chooseOperand("operand1")} id="operand1">
+                        <input type={"radio"} id={"radio1"} name={"currentOperand"} value={currentOperand}
+                               checked={currentOperand === 'operand1'}/>
+                        <label htmlFor={"radio1"}>operand1</label>
+                    </div>
+                    <div onClick={() => chooseOperand("operand2")} id="operand2">
+                        <input type={"radio"} id={"radio2"} name={"currentOperand"} value={currentOperand}
+                               checked={currentOperand === 'operand2'}/>
+                        <label htmlFor={"radio2"}>operand2</label>
+                    </div>
+                </div>
 
-                <div onClick={() => chooseOperand("operand1")}>
-                    <input type={"radio"} id={"radio1"} name={"currentOperand"} value={currentOperand} checked={currentOperand === 'operand1'}/>
-                    <label for={"radio1"}>operand1</label>
-                </div>
-                <div onClick={() => chooseOperand("operand2")}>
-                    <input type={"radio"}  id={"radio2"} name={"currentOperand"} value={currentOperand} checked={currentOperand === 'operand2'}/>
-                    <label for={"radio2"} >operand2</label>
-                </div>
 
 
             </fieldset>
 
+            <div className="inputFlex">
+            <input id="firstInput" onClick={() => chooseOperand("operand1")} placeholder={"operand1"} onInput={changeInput1} value={operand1}/>
 
-            <input onClick={() => chooseOperand("operand1")} placeholder={"operand1"} onInput={changeInput1} value={operand1}/>
-            <h1>{validated1}</h1>
+            <input id="secondInput" onClick={() => chooseOperand("operand2")} placeholder={"operand2"} onInput={changeInput2} value={operand2}/>
 
+            </div>
 
-            <button onClick={() => clickHandler("+")}>+</button>
-            <button onClick={() => clickHandler("-")}>-</button>
-            <button onClick={() => clickHandler("*")}>*</button>
-            <button onClick={() => clickHandler("/")}>/</button>
-            <button onClick={() => clickHandler("x^y")}>x^y</button>
-            <button onClick={() => clickHandler("fraction division")}>fraction division</button>
-
-
-            <button onClick={dot}>.</button>
-            <button onClick={del}>DEL</button>
-            <button onClick={AC}>AC</button>
+            <div className="validatedDiv">
+                <h1>{validated1}</h1>
+                <h1>{validated2}</h1>
+            </div>
 
 
+            <div className="operators">
+                <button onClick={() => clickHandler("+")}>+</button>
+                <button onClick={() => clickHandler("-")}>-</button>
+                <button onClick={() => clickHandler("*")}>*</button>
+                <button onClick={() => clickHandler("/")}>/</button>
+                <button onClick={() => clickHandler("x^y")}>x^y</button>
+                <button onClick={() => clickHandler("fraction division")}>fraction division</button>
+                <button onClick={dot}>.</button>
+                <button onClick={plusMinus}>+/-</button>
+            </div>
 
-            <input onClick={() => chooseOperand("operand2")} placeholder={"operand2"} onInput={changeInput2} value={operand2}/>
-            <h1>{validated2}</h1>
+
+
+
+
+
 
 
 
@@ -216,12 +261,17 @@ function App() {
             </div>
 
             {show && (
-            <div>
+            <div class="numberButtons">
                 {numList.map((item) => {
                    return  (
                        <button  key={item} onClick={() => typeInput(item)}>{item}</button>
+
                    )
+
                 })}
+
+                <button onClick={del}>DEL</button>
+                <button onClick={AC}>AC</button>
 
             </div>
             )}
@@ -233,7 +283,7 @@ function App() {
 
 
 
-            <h1>{result}</h1>
+
         </div>
     )
 }
