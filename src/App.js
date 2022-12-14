@@ -1,7 +1,7 @@
 import './App.css';
 import {useState} from "react";
-import {type} from "@testing-library/user-event/dist/type";
-import {click} from "@testing-library/user-event/dist/click";
+/*import {type} from "@testing-library/user-event/dist/type";*/
+/*import {click} from "@testing-library/user-event/dist/click";*/
 function App() {
     const [operand1, setOperand1] = useState('')
     const [operand2, setOperand2] = useState('')
@@ -198,22 +198,22 @@ function App() {
 
     return (
         <div className="container">
-            <div id="display">
+            <div className="display">
                 <h1>{result}</h1>
             </div>
 
             <fieldset>
-                <legend id="title">
+                <legend className="title">
                     Choose operand {currentOperand}
                 </legend>
 
                 <div className="chooseOperandFlex">
-                    <div onClick={() => chooseOperand("operand1")} id="operand1">
+                    <div onClick={() => chooseOperand("operand1")} className="operand1">
                         <input type={"radio"} id={"radio1"} name={"currentOperand"} value={currentOperand}
                                checked={currentOperand === 'operand1'}/>
                         <label htmlFor={"radio1"}>operand1</label>
                     </div>
-                    <div onClick={() => chooseOperand("operand2")} id="operand2">
+                    <div onClick={() => chooseOperand("operand2")} className="operand2">
                         <input type={"radio"} id={"radio2"} name={"currentOperand"} value={currentOperand}
                                checked={currentOperand === 'operand2'}/>
                         <label htmlFor={"radio2"}>operand2</label>
@@ -225,9 +225,9 @@ function App() {
             </fieldset>
 
             <div className="inputFlex">
-            <input id="firstInput" onClick={() => chooseOperand("operand1")} placeholder={"operand1"} onInput={changeInput1} value={operand1}/>
+            <input className="firstInput" onClick={() => chooseOperand("operand1")} placeholder={"operand1"} onInput={changeInput1} value={operand1}/>
 
-            <input id="secondInput" onClick={() => chooseOperand("operand2")} placeholder={"operand2"} onInput={changeInput2} value={operand2}/>
+            <input className="secondInput" onClick={() => chooseOperand("operand2")} placeholder={"operand2"} onInput={changeInput2} value={operand2}/>
 
             </div>
 
@@ -261,7 +261,7 @@ function App() {
             </div>
 
             {show && (
-            <div class="numberButtons">
+            <div className="numberButtons">
                 {numList.map((item) => {
                    return  (
                        <button  key={item} onClick={() => typeInput(item)}>{item}</button>
