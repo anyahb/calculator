@@ -1,6 +1,7 @@
 import './App.css';
 import {useState} from "react";
 /*import {type} from "@testing-library/user-event/dist/type";*/
+
 /*import {click} from "@testing-library/user-event/dist/click";*/
 function App() {
     const [operand1, setOperand1] = useState('')
@@ -53,23 +54,20 @@ function App() {
                 setOperand1(operand1.substring(1))
             }
         }
-    if (currentOperand === "operand2") {
-        if (Math.sign(parseFloat(operand2)) === 1) {
-            setOperand2("-" + operand2)
-        } else {
-            setOperand2(operand2.substring(1))
+        if (currentOperand === "operand2") {
+            if (Math.sign(parseFloat(operand2)) === 1) {
+                setOperand2("-" + operand2)
+            } else {
+                setOperand2(operand2.substring(1))
+            }
         }
     }
-}
 
 
-
-
-
-    const changeInput1 = function (event){
+    const changeInput1 = function (event) {
         const input = event.target.value
         const parsing = isNaN(input)
-        if (parsing === false){
+        if (parsing === false) {
             setOperand1(input)
 
         } else {
@@ -78,13 +76,12 @@ function App() {
         }
 
 
-
     }
 
-    const changeInput2 = function (event){
+    const changeInput2 = function (event) {
         const input = event.target.value
         const parsing = isNaN(input)
-        if (parsing === false){
+        if (parsing === false) {
             setOperand2(input)
         } else {
             setOperand2("")
@@ -93,9 +90,7 @@ function App() {
     }
 
 
-
-
-    const clickHandler = function(item){
+    const clickHandler = function (item) {
         setResult(item)
 
         switch (item) {
@@ -109,7 +104,7 @@ function App() {
                 setResult(parseFloat(operand1) * parseFloat(operand2))
                 break;
             case "/":
-                if (operand2 !== '0'){
+                if (operand2 !== '0') {
                     setResult(parseFloat(operand1) / parseFloat(operand2))
                 } else {
                     setResult("error")
@@ -117,28 +112,26 @@ function App() {
                 }
                 break;
             case "x^y":
-                setResult(Math.pow(operand1,operand2))
+                setResult(Math.pow(operand1, operand2))
                 break;
             case "fraction division":
                 setResult(Math.round(parseFloat(operand1) / parseFloat(operand2)))
                 break;
             default:
-                alert( "Error" );
+                alert("Error");
 
         }
-
-
 
 
     }
 
 
-    const typeInput = function(num){
-        if (num.length > 1){
+    const typeInput = function (num) {
+        if (num.length > 1) {
         }
-        if (currentOperand === "operand1"){
+        if (currentOperand === "operand1") {
             setOperand1((operand1) => operand1 + num)
-        // setOperand1(num)
+            // setOperand1(num)
             /*switch (num) {
                 case "1":
                     setOperand1('1')
@@ -174,26 +167,19 @@ function App() {
                     alert( "Error" );
             }*/
         } else {
-        setOperand2((operand2) => operand2 + num)
+            setOperand2((operand2) => operand2 + num)
         }
 
 
     }
 
-    const chooseOperand = function(operand){
+    const chooseOperand = function (operand) {
         setCurrentOperand(operand)
 
     }
 
 
-
-
-    const numList = [1,2,3,4,5,6,7,8,9,0]
-
-
-
-
-
+    const numList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 
 
     return (
@@ -209,32 +195,35 @@ function App() {
 
                 <div className="chooseOperandFlex">
                     <div onClick={() => chooseOperand("operand1")} className="operand1">
-                        <input type={"radio"} id={"radio1"} name={"currentOperand"} value={currentOperand}
+                        <input type={"radio"} id={"radio1"} name={"currentOperand"} class="operand"
+                               value={currentOperand}
                                checked={currentOperand === 'operand1'}/>
                         <label htmlFor={"radio1"}>operand1</label>
                     </div>
                     <div onClick={() => chooseOperand("operand2")} className="operand2">
-                        <input type={"radio"} id={"radio2"} name={"currentOperand"} value={currentOperand}
+                        <input type={"radio"} id={"radio2"} name={"currentOperand"} class="operand"
+                               value={currentOperand}
                                checked={currentOperand === 'operand2'}/>
                         <label htmlFor={"radio2"}>operand2</label>
                     </div>
                 </div>
 
 
-
             </fieldset>
 
             <div className="inputFlex">
-            <input className="firstInput" onClick={() => chooseOperand("operand1")} placeholder={"operand1"} onInput={changeInput1} value={operand1}/>
+                <input className="firstInput" onClick={() => chooseOperand("operand1")} placeholder={"operand1"}
+                       onInput={changeInput1} value={operand1}/>
 
-            <input className="secondInput" onClick={() => chooseOperand("operand2")} placeholder={"operand2"} onInput={changeInput2} value={operand2}/>
+                <input className="secondInput" onClick={() => chooseOperand("operand2")} placeholder={"operand2"}
+                       onInput={changeInput2} value={operand2}/>
 
             </div>
 
-            <div className="validatedDiv">
+            {/*    <div className="validate">
                 <h1>{validated1}</h1>
                 <h1>{validated2}</h1>
-            </div>
+            </div>*/}
 
 
             <div className="operators">
@@ -249,42 +238,27 @@ function App() {
             </div>
 
 
-
-
-
-
-
-
-
-            <div>
-
-            </div>
-
             {show && (
-            <div className="numberButtons">
-                {numList.map((item) => {
-                   return  (
-                       <button  key={item} onClick={() => typeInput(item)}>{item}</button>
+                <div className="numberButtons">
+                    {numList.map((item) => {
+                        return (
+                            <button key={item} onClick={() => typeInput(item)}>{item}</button>
 
-                   )
+                        )
 
-                })}
+                    })}
 
-                <button onClick={del}>DEL</button>
-                <button onClick={AC}>AC</button>
+                    <button onClick={del}>DEL</button>
+                    <button onClick={AC}>AC</button>
 
-            </div>
+                </div>
             )}
 
             <button onClick={() => setShow(!show)}>{show ? "hide" : "show"}</button>
 
 
-
-
-
-
-
         </div>
     )
 }
+
 export default App;

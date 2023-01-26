@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #333333;
 }
 
 code {
@@ -16,34 +17,80 @@ code {
   max-width: 400px;
   height: 500px;
   margin: 10vh auto 0 auto;
-  box-shadow: 0px 0px 43px 17px rgba(153,153,153,1);
+  box-shadow: 0px 0px 43px 17px rgba(153,153,153,1),
+  inset 5px 5px 15px rgba(0,0,0,0.5),
+  inset 5px 5px 15px rgba(0,0,0,0.5);
+  background: #333;
+  border-radius: 25px;
 }
 
 .display {
   text-align: right;
-  height: 70px;
   line-height: 70px;
   padding: 16px 8px;
   font-size: 14px;
+  color: white;
+  border-radius: 10px;
 }
 
+.display h1 {
+  background: #a7af7c;
+  height: 100px;
+  border-radius: 10px;
+  margin: 20px;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.75);
+  padding-right: 10px;
+}
+
+.operators button {
+  background: linear-gradient(180deg, #2f2f2f, #3f3f3f);
+ /* box-shadow: inset -8px 0 8px rgba(0,0,0,0.15),
+inset 0 -8px 8px rgba(0,0,0,0.25),
+  0 0 0 2px rgba(0,0,0,0.75),
+  10px 25px 25px rgba(0,0,0,0.4);*/
+  cursor: pointer;
+  color: white;
+}
+
+.calculator button::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  bottom: 14px;
+  right: 12px;
+  background: linear-gradient(90deg, #2d2d2d, #4d4d4d);
+  border: 10px;
+}
+
+.numberButtons button {
+  background: linear-gradient(180deg, #2f2f2f, #3f3f3f);
+/*  box-shadow: inset -8px 0 8px rgba(0,0,0,0.15),
+  inset 0 -8px 8px rgba(0,0,0,0.25),
+  0 0 0 2px rgba(0,0,0,0.75),
+  10px 25px 25px rgba(0,0,0,0.4);*/
+  color: white;
+}
+
+.operand {
+  color: green;
+}
 
 .operand1 {
   display:flex;
-  padding-left: 12px;
+  color: white;
 
 }
 
 .operand2 {
   display:flex;
-  padding-right: 85px;
+  color: white;
 
 }
 
 .chooseOperandFlex {
   display: flex;
-  justify-content: space-between;
-
+  justify-content: space-around;
 }
 
 .inputFlex {
@@ -66,23 +113,32 @@ code {
   display: grid;
   border-bottom: 1px solid #999;
   border-left: 1px solid #999;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   -webkit-text-stroke-width: thin;
-  height: 250px;
+  height: 200px;
+
 }
 
 .operators {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   height: 100px;
-  color:green;
 }
 
 .validatedDiv {
   display:flex;
   justify-content: space-evenly;
   font-size: 8px;
-  color:red;
 }
 
+.title {
+  color: white;
+}
+
+
+@media (max-width: 480px) {
+  .container {
+    max-width: 300px;
+  }
+}
 
